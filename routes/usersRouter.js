@@ -1,4 +1,10 @@
 module.exports = function(app, swig, gestorBD) {
+
+    app.get("/logout",function(req,res){
+        logUser(null,null,req);
+        res.redirect("/login");//TODO : solo se deberia mostrar el boton cuando el usuario esta logeado, arreglar eso
+        o
+    })
 	app.get('/register', function(req, res) {
 		var respuesta = swig.renderFile('views/registerView.html', {});
 		res.send(respuesta);
