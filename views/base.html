@@ -32,8 +32,9 @@
           <li id="mCompras"><a href="/compras">Compras</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/registrarse"><span class="glyphicon glyphicon-user"></span> Registrate</a></li>
-          <li><a href="/identificarse"><span class="glyphicon glyphicon-log-in"></span> Identifícate</a></li>
+          <li><a href="/registrarse"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+          <li><a href="/identificarse"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         </ul>
       </div>
     </div>
@@ -45,6 +46,9 @@
     <script>
       var mensaje = getUrlParameter('mensaje');
       var tipoMensaje = getUrlParameter('tipoMensaje');
+    
+      console.log("Usuario");
+      console.log(user);
       if (mensaje != "") {
         if (tipoMensaje == "") {
           tipoMensaje = 'alert-info';
