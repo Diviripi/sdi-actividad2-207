@@ -38,6 +38,7 @@ app.use(express.static('public'));
 //controllers
 require('./routes/usersRouter.js')(app, swig, gestorBD);
 require('./routes/adminRouter.js')(app, swig, gestorBD);
+require('./routes/offersRouter.js')(app,swig,gestorBD);
 
 
 //First test purposes
