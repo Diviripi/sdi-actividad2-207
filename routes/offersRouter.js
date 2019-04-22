@@ -26,11 +26,10 @@ module.exports = function (app, swig, gestorBD) {
             if (id == null) {
                 res.redirect("/offers/addOffer");
             } else {
-                releaseEvents.redirect("/");
+                res.redirect("/user/offers");
             }
         })
         console.log(offer);
-        res.redirect("/addOffer");
     })
 
     app.get('offers/removeOffer/:id', function (req, res) {
@@ -43,5 +42,24 @@ module.exports = function (app, swig, gestorBD) {
             }
         })
 
+    })
+
+    app.get('/user/offers', function (req, res) {
+        let user = req.session.usuario;
+        if (user == null) {
+            res.redirect('/login');
+        } else {
+            let criterio = {user: user};
+            let ofertas = gestorBD.offersDB.getOffers(criterio, function (ofertas) {
+                if (ofertas == null) {
+                    res.send('Error al listar');
+                } else {
+                    let respuesta = swig.renderFile('views/bOffers.html', {
+                        ofertas: ofertas
+                    });
+                    res.send(respuesta);
+                }
+            })
+        }
     })
 }
