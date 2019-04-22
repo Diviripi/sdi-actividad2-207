@@ -1,4 +1,40 @@
 module.exports = function (app, swig, gestorBD) {
+
+    app.get('/store', function (req, res) {
+        let criterio = {};
+        if (req.query.busqueda != null) {
+            criterio = {
+                title: {$regex: new RegExp(req.query.busqueda, 'i')}
+            };
+        }
+        let pg = parseInt(req.query.pg); // Es String !!
+        if (req.query.pg == null) { // Puede no venir el param
+            pg = 1;
+        }
+        gestorBD.offersDB.getOffersPg(criterio, pg, function (offers, total) {
+            if (offers == null) {
+                res.send("Error when showing offers");
+            } else {
+                let lastPg = total / 4;
+                if (total % 4 > 0) { // Sobran decimales
+                    lastPg = lastPg + 1;
+                }
+                let pages = []; // paginas mostrar
+                for (let i = pg - 2; i <= pg + 2; i++) {
+                    if (i > 0 && i <= lastPg) {
+                        pages.push(i);
+                    }
+                }
+                let respuesta = swig.renderFile('views/bStore.html',
+                    {
+                        ofertas: offers,
+                        paginas: pages,
+                        actual: pg
+                    });
+                res.send(respuesta);
+            }
+        });
+    });
     app.get("/offers/addOffer", function (req, res) {
         var respuesta = swig.renderFile('views/newOffer.html', {});
         res.send(respuesta);
@@ -18,8 +54,6 @@ module.exports = function (app, swig, gestorBD) {
             date: date,
             highlighted: highlighted,
             user: user
-
-
         }
 
         gestorBD.offersDB.addOffer(offer, function (id) {
@@ -50,7 +84,7 @@ module.exports = function (app, swig, gestorBD) {
             res.redirect('/login');
         } else {
             let criterio = {user: user};
-            let ofertas = gestorBD.offersDB.getOffers(criterio, function (ofertas) {
+            gestorBD.offersDB.getUserOffers(criterio, function (ofertas) {
                 if (ofertas == null) {
                     res.send('Error al listar');
                 } else {

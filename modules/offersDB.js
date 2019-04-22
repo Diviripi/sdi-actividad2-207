@@ -40,7 +40,7 @@ module.exports = {
             }
         })
     },
-    getOffers: function (criterio, functionCallback) {
+    getUserOffers: function (criterio, functionCallback) {
         this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
             if (err) {
                 functionCallback(null);
@@ -56,5 +56,25 @@ module.exports = {
                 })
             }
         })
+    },
+    getOffersPg: function (criterio, pg, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                let collection = db.collection('offers');
+                collection.count(function (err, count) {
+                    collection.find(criterio).skip((pg - 1) * 4).limit(4)
+                        .toArray(function (err, offers) {
+                            if (err) {
+                                funcionCallback(null);
+                            } else {
+                                funcionCallback(offers, count);
+                            }
+                            db.close();
+                        });
+                });
+            }
+        });
     }
 }
