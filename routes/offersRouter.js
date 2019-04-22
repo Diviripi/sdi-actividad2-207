@@ -136,4 +136,14 @@ module.exports = function (app, swig, gestorBD) {
             })
         }
     })
+
+    app.get("/user/offers/bought",function(req,res){
+        console.log(req.session.usuario)
+        gestorBD.offersDB.getBoughtOffers(req.session.usuario,function(ofertas){
+            let respuesta= swig.renderFile('views/boughtOffersView.html',{
+                ofertas:ofertas
+            });
+            res.send(respuesta)
+        })
+    })
 }
