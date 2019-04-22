@@ -98,5 +98,39 @@ module.exports = {
 				});
 			}
 		});
-	}
+	},
+    updateOffer: function (criterio, offer, functionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                functionCallback(null);
+            } else {
+                let collection = db.collection('offers');
+                collection.update(criterio, offer, function (err, result) {
+                    if (err) {
+                        functionCallback(null);
+                    } else {
+                        functionCallback(result);
+                    }
+                })
+            }
+        })
+    },
+    getOffer: function (criterio, functionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                functionCallback(null);
+            } else {
+                var collection = db.collection('offers');
+                collection.find(criterio).toArray(function (err, result) {
+                    if (err) {
+                        functionCallback(null);
+                    } else {
+                        functionCallback(result);
+                    }
+                    db.close();
+                })
+            }
+        })
+    },
+    
 };

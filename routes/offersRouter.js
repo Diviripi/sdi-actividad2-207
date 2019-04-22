@@ -75,7 +75,47 @@ module.exports = function (app, swig, gestorBD) {
                 res.redirect('/user/offers');
             }
         })
+    })
 
+    app.get('/offers/buyOffer/:id', function (req, res) {
+        let criterioOferta = {_id: gestorBD.mongo.ObjectID(req.params.id)};
+        let criterioUsuario = {email: req.session.usuario};
+        gestorBD.usersDB.obtenerUsuarios(criterioUsuario, function (usuarios) {
+            if (usuarios == null) {
+                res.send('Error wile buying');
+            } else {
+                gestorBD.offersDB.getOffer(criterioOferta, function (ofertas) {
+                    if (ofertas == null) {
+                        res.send('Error while buying');
+                    } else {
+                        if (usuarios[0].money >= ofertas[0].price) {
+                            ofertas[0].bought = true;
+                            ofertas[0].buyer = usuarios[0].email;
+                            usuarios[0].money -= ofertas[0].price;
+                            gestorBD.offersDB.updateOffer(criterioOferta, ofertas[0], function (id) {
+                                if (id == null) {
+                                    res.send('Error while buying');
+                                } else {
+                                    console.log('Offer updated correctly');
+                                    console.log(ofertas[0]);
+                                }
+                            });
+                            gestorBD.usersDB.updateUser(criterioUsuario, usuarios[0], function (id) {
+                                if (id == null) {
+                                    res.send('Error while buying');
+                                } else {
+                                    console.log('User updated correctly');
+                                    console.log(usuarios[0]);
+                                }
+                            });
+                            res.redirect('/store');
+                        } else {
+                            res.send('you do not have enough money to buy this offer');
+                        }
+                    }
+                })
+            }
+        });
     })
 
     app.get('/user/offers', function (req, res) {
