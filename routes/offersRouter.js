@@ -32,13 +32,13 @@ module.exports = function (app, swig, gestorBD) {
         console.log(offer);
     })
 
-    app.get('offers/removeOffer/:id', function (req, res) {
+    app.get('/offers/removeOffer/:id', function (req, res) {
         let criterio = {_id: gestorBD.mongo.ObjectID(req.params.id)};
         gestorBD.offersDB.removeOffer(criterio, function (id) {
             if (id == null) {
-                res.send('error while removing offer');
+                res.send('error while removing');
             } else {
-                res.send(`Canción ${id} eliminada correctamente`);
+                res.redirect('/user/offers');
             }
         })
 
