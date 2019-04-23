@@ -110,7 +110,7 @@ module.exports = function (app, swig, gestorBD) {
                             });
                             res.redirect('/store');
                         } else {
-                            res.send('you do not have enough money to buy this offer');
+                            res.redirect('/store?mensaje=No tienes dinero suficiente para comprar esta oferta&tipoMensaje=alert-danger');
                         }
                     }
                 })

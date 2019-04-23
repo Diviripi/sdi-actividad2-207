@@ -91,7 +91,7 @@ module.exports = {
 					if (err) {
 						functionCallback(null);
 					} else {
-                        console.log(result)
+                        console.log(result);
                         functionCallback(result);
                     }
                     db.close();
