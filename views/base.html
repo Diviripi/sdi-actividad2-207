@@ -31,10 +31,38 @@
           <li id="mPublicaciones"><a href="/publicaciones">Publicaciones</a></li>
           <li id="mCompras"><a href="/compras">Compras</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul id="userOptions" class="nav navbar-nav navbar-right">
+
           <li><a href="/registrarse"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-          <li><a href="/identificarse"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          <script>
+
+            var user = getCookie("user");
+            
+            if (user == "") {
+              $("#userOptions")
+                .append("<li><a href='/login'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>");
+            } else {
+              $("#userOptions")
+                .append("<li><a href='/logout'><span class='glyphicon glyphicon-log-out'></span> Logout</a></li>");
+            }
+            function getCookie(cname) {
+              var name = cname + "=";
+              var decodedCookie = decodeURIComponent(document.cookie);
+              var ca = decodedCookie.split(';');
+              for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+                }
+              }
+              return "";
+            }
+          </script>
+        
+        
         </ul>
       </div>
     </div>
@@ -44,10 +72,10 @@
 
   <div class="container">
     <script>
-     
+
       var mensaje = getUrlParameter('mensaje');
       var tipoMensaje = getUrlParameter('tipoMensaje');
-    
+
       if (mensaje != "") {
         if (tipoMensaje == "") {
           tipoMensaje = 'alert-info';
@@ -62,6 +90,8 @@
         return results === null ? '' :
           decodeURIComponent(results[1].replace(/\+/g, ' '));
       };
+
+
     </script>
 
     <!-- Contenido -->

@@ -29,6 +29,7 @@ module.exports = function(app, swig, gestorBD) {
 			var criterio = { $or: list };
 			gestorBD.usersDB.borrarUsuarios(criterio, function(users) {
 				//console.log(users.result.n);
+				
 				res.redirect('/users/list');
 			});
 		}

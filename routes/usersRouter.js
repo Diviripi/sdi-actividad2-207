@@ -1,7 +1,7 @@
 module.exports = function (app, swig, gestorBD) {
 
     app.get("/logout", function (req, res) {
-        logUser(null, null, req);
+        logUser(null, null, req,res);
         res.redirect("/login");//TODO : solo se deberia mostrar el boton cuando el usuario esta logeado, arreglar eso
 
     })
@@ -44,7 +44,8 @@ module.exports = function (app, swig, gestorBD) {
                         res.redirect('/register?mensaje=Error al registrar usuario');
                     } else {
                         //logear al usuario
-                        logUser(usuario.email, usuario.rol, req);
+                        logUser(usuario.email, usuario.rol, req,res);
+                        
                         res.redirect('/'); //TODO: por el momento va eso
                         //TODO: incluir en la vista el dinero actual
                        
@@ -57,9 +58,15 @@ module.exports = function (app, swig, gestorBD) {
     });
 
 
-    function logUser(email, rol, req) {
+    function logUser(email, rol, req, res) {
         req.session.usuario = email;
         req.session.rol = rol;
+        res.cookie("user", email==null?"":email);
+        
+    }
+
+    function setMoney(money,res){
+        res.cookie("money",money)
     }
 
     app.get("/login", function (req, res) {
@@ -81,7 +88,7 @@ module.exports = function (app, swig, gestorBD) {
                     "?mensaje=Email o password incorrecto" +
                     "&tipoMensaje=alert-danger ");
             } else {
-                logUser(usuarios[0].email, usuarios[0].rol, req);
+                logUser(usuarios[0].email, usuarios[0].rol, req,res);
                 res.redirect("/user/offers");
             }
         });
