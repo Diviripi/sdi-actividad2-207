@@ -18,6 +18,8 @@ var swig = require('swig');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+var jwt = require('jsonwebtoken');
+app.set('jwt', jwt);
 
 //aqui los routers
 
@@ -40,6 +42,7 @@ app.use(express.static('public'));
 require('./routes/usersRouter.js')(app, swig, gestorBD);
 require('./routes/adminRouter.js')(app, swig, gestorBD);
 require('./routes/offersRouter.js')(app,swig,gestorBD);
+require('./routes/restAPI')(app, gestorBD);
 
 
 //First test purposes
