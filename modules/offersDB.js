@@ -56,6 +56,25 @@ module.exports = {
 			}
 		});
 	},
+
+	getOffersNotUser:function(user,functionCallback){
+		this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
+			if (err) {
+				functionCallback(null);
+			} else {
+				var collection = db.collection('offers');
+				var criterio={'user': {$ne : user}}
+				collection.find(criterio).toArray(function(err, result) {
+					if (err) {
+						functionCallback(null);
+					} else {
+						functionCallback(result);
+					}
+					db.close();
+				});
+			}
+		});
+	},
 	getOffersPg: function(criterio, pg, funcionCallback) {
 		this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
 			if (err) {

@@ -31,6 +31,39 @@ module.exports = function(app, gestorBD) {
 		});
 	});
 
+	app.post('/api/ofertas',function(req,res){
+		var token = req.headers['token'] || req.body.token || req.query.token;
+		app.get('jwt').verify(token, 'secreto', function(err, infoToken) {
+			if (err ) {
+				res.status(403); // Forbidden
+				res.json({
+					acceso: false,
+					error: 'Token invalido o caducado'
+				});
+				// También podríamos comprobar que intoToken.usuario existe
+				return;
+			} else {
+				// dejamos correr la petición
+				var usuario = infoToken.usuario;
+				gestorBD.offersDB.getOffersNotUser(usuario,function(ofertas){
+					if (ofertas == null || ofertas.length == 0) {
+					
+						res.status(204); // Unauthorized
+						res.json({
+							err: "No results"
+						});
+					} else {
+					
+						res.status(200);
+						res.json({offers:ofertas});
+					}
+				})
+			}
+		})
+
+
+	});
+
 
 
 }
