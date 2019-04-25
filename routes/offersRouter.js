@@ -11,10 +11,11 @@ module.exports = function (app, swig, gestorBD) {
         if (req.query.pg == null) { // Puede no venir el param
             pg = 1;
         }
-        gestorBD.offersDB.getOffersPg(criterio, pg, function (offers, total) {
+        gestorBD.offersDB.getOffersPg(criterio, req.session.usuario, pg, function (offers, total) {
             if (offers == null) {
                 res.send("Error when showing offers");
             } else {
+                console.log(offers);
                 let lastPg = total / 4;
                 if (total % 4 > 0) { // Sobran decimales
                     lastPg = lastPg + 1;
@@ -110,7 +111,7 @@ module.exports = function (app, swig, gestorBD) {
                             });
                             res.redirect('/store');
                         } else {
-                            res.send('you do not have enough money to buy this offer');
+                            res.redirect('/store?mensaje=No tienes dinero suficiente para comprar esta oferta&tipoMensaje=alert-danger');
                         }
                     }
                 })
