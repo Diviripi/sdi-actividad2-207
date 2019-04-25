@@ -17,6 +17,7 @@ module.exports = function (app, swig, gestorBD) {
 
         if (password != confirmPassword) {
             res.redirect('/register?mensaje=Passwords do not match');
+            return;
         }
 
         var seguro = app
@@ -46,6 +47,7 @@ module.exports = function (app, swig, gestorBD) {
                         logUser(usuario.email, usuario.rol, req);
                         res.redirect('/'); //TODO: por el momento va eso
                         //TODO: incluir en la vista el dinero actual
+                       
                     }
                 });
             } else {

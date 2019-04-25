@@ -44,11 +44,10 @@
 
   <div class="container">
     <script>
+     
       var mensaje = getUrlParameter('mensaje');
       var tipoMensaje = getUrlParameter('tipoMensaje');
     
-      console.log("Usuario");
-      console.log(user);
       if (mensaje != "") {
         if (tipoMensaje == "") {
           tipoMensaje = 'alert-info';
