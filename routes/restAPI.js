@@ -123,4 +123,67 @@ module.exports = function(app, gestorBD) {
 			}
 		});
 	});
+
+	app.post('/api/mensajes/ver', function(req, res) {
+		var token = req.headers['token'] || req.body.token || req.query.token;
+		app.get('jwt').verify(token, 'secreto', function(err, infoToken) {
+			if (err) {
+				res.status(403); // Forbidden
+				res.json({
+					acceso: false,
+					error: 'Token invalido o caducado'
+				});
+				// También podríamos comprobar que intoToken.usuario existe
+				return;
+			} else {
+				var idOferta = req.body.offer;
+				var usuario = infoToken.usuario;
+				gestorBD.offersDB.findOffer(idOferta, function(oferta) {
+					if (oferta == null || oferta.length == 0) {
+						res.status(404); // not found
+						res.json({
+							err: 'No such offer'
+						});
+					} else {
+						oferta = oferta[0];
+						
+						if (oferta.chats == undefined) {
+							res.status(404);
+							res.json({
+								err: 'no chats in this offer'
+							});
+							return;
+						}
+						if (oferta.user == usuario) {
+							//usuario es el propietario
+							res.status(200);
+							res.json({
+								chats: oferta.chats
+							});
+							return;
+						} else {
+							//el usuario no es el propietario, puede tener una conversacion o no
+							if (oferta.chats[usuario] == undefined) {
+								//no existe la conversacion con el usuario{
+								res.status(403);
+								res.json({
+									err: 'You have no chats in the offer'
+								});
+								return;
+							} else {
+								var tmp={};
+								tmp[usuario]=oferta.chats[usuario];
+							
+
+								res.status(200);
+								res.json({
+									chats: tmp
+								});
+							}
+						}
+					}
+				});
+			}
+		});
+	});
 };
