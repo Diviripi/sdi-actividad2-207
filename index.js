@@ -54,7 +54,7 @@ routerUsuarioToken.use(function(req, res, next) {
 });
 // Aplicar routerUsuarioToken
 app.use('/api/ofertas', routerUsuarioToken);
-app.use('/api/mensajes', routerUsuarioToken);
+//app.use('/api/mensajes', routerUsuarioToken);
 
 //mongodb
 var gestorBD = require('./modules/gestorBD.js');

@@ -79,6 +79,7 @@ module.exports = function (app, swig, gestorBD) {
     })
 
     app.get('/offers/buyOffer/:id', function (req, res) {
+        console.log(req.params.id);
         let criterioOferta = {_id: gestorBD.mongo.ObjectID(req.params.id)};
         let criterioUsuario = {email: req.session.usuario};
         gestorBD.usersDB.obtenerUsuarios(criterioUsuario, function (usuarios) {
