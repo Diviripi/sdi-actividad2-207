@@ -23,6 +23,27 @@ module.exports = {
 			}
 		});
 	},
+	findOffer:function(id,functionCallback){
+		var dbOffer=this;
+		this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
+			if (err) {
+				functionCallback(null);
+			} else {
+				var collection = db.collection('offers');
+				let criterio = {_id: dbOffer.mongo.ObjectID(id)};
+				collection.find(criterio).toArray(function(err, result) {
+					if (err) {
+						functionCallback(null);
+					} else {
+					
+						functionCallback(result);
+					}
+					db.close();
+				});
+			}
+		});
+	},
+
 	removeOffer: function(criterio, functionCallback) {
 		this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
 			if (err) {
@@ -110,7 +131,7 @@ module.exports = {
 					if (err) {
 						functionCallback(null);
 					} else {
-                        console.log(result);
+                        //console.log(result);
                         functionCallback(result);
                     }
                     db.close();
@@ -150,6 +171,28 @@ module.exports = {
                 })
             }
         })
-    },
-    
+	},
+	updateMessages:function(idOferta,chats,functionCallback){
+		var dbOffer=this;
+		this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                functionCallback(null);
+            } else {
+				var collection = db.collection('offers');
+				let criterio = {_id: dbOffer.mongo.ObjectID(idOferta)};
+				var chat={
+					chats:chats
+				}
+                collection.update(criterio,{$set: chat},function (err, result) {
+                    if (err) {
+                        functionCallback(null);
+                    } else {
+                        functionCallback(result);
+                    }
+				})
+				db.close();
+			}
+		})
+		
+	} ,   
 };
