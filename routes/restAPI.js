@@ -52,8 +52,19 @@ module.exports = function(app, gestorBD) {
 							err: 'No results'
 						});
 					} else {
+
+						var datos=[];
+						for(var i=0;i<ofertas.length;i++){
+							datos.push({
+								id:ofertas[i]["_id"],
+								title:ofertas[i]["title"],
+								description:ofertas[i]["description"],
+								price:ofertas[i]["price"],
+								user:ofertas[i]["user"]
+							})
+						}
 						res.status(200);
-						res.json({ offers: ofertas });
+						res.json({ offers: datos });
 					}
 				});
 			}
