@@ -1,5 +1,6 @@
 module.exports = function(app, gestorBD) {
 	app.post('/api/login/', function(req, res) {
+		
 		var seguro = app
 			.get('crypto')
 			.createHmac('sha256', app.get('clave'))
@@ -146,7 +147,7 @@ module.exports = function(app, gestorBD) {
 						});
 					} else {
 						oferta = oferta[0];
-						
+
 						if (oferta.chats == undefined) {
 							res.status(404);
 							res.json({
@@ -171,9 +172,8 @@ module.exports = function(app, gestorBD) {
 								});
 								return;
 							} else {
-								var tmp={};
-								tmp[usuario]=oferta.chats[usuario];
-							
+								var tmp = {};
+								tmp[usuario] = oferta.chats[usuario];
 
 								res.status(200);
 								res.json({
