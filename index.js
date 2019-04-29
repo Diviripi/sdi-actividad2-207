@@ -1,8 +1,21 @@
 //App creation
 var express = require('express');
+
 var app = express();
-//de momento es http no https
-var http = require('http');
+//app.use(express.bodyParser());
+var https = require('https');
+var fs = require('fs');
+var rest = require('request');
+app.set('rest',rest);
+
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Credentials", "true");
+	res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, UPDATE, PUT");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, token");
+	// Debemos especificar todas las headers que se aceptan. Content-Type , token
+	next();
+   });
 //session
 var expressSession = require('express-session');
 app.use(
@@ -15,6 +28,7 @@ app.use(
 var crypto = require('crypto');
 var mongo = require('mongodb');
 var swig = require('swig');
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -80,5 +94,27 @@ require('./routes/restAPI')(app, gestorBD);
 
 //First test purposes
 
-app.get('/', (req, res) => res.send('Hello World!'));
-app.listen(app.get('port'), () => console.log('Server listening on port ' + app.get('port')));
+app.get('/', function(req, res) {
+	res.redirect('/login');
+});
+app.use(function(err, req, res, next) {
+	console.log('Error producido: ' + err); //we log the error in our db
+
+	if (!res.headersSent) {
+		res.status(400);
+		res.send('Recurso no disponible');
+	}
+});
+
+// lanzar el servidor
+https
+	.createServer(
+		{
+			key: fs.readFileSync('certificates/alice.key'),
+			cert: fs.readFileSync('certificates/alice.crt')
+		},
+		app
+	)
+	.listen(app.get('port'), function() {
+		console.log('Servidor activo');
+	});
