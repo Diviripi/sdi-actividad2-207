@@ -1,10 +1,14 @@
 <div id="widget-mensajes">
+    <div id="descripcionOferta">
+
+    </div>
    
     <div id="conversaciones">
+        <h1>Lista de chats</h1>
         <button class="btn" onclick="cargarChat(id)"></button>
     </div>
     <div id="chatActual">
-        <div id="listaMensajes" class="pre-scrollable" height="100px">
+        <div id="listaMensajes" style="max-height: 300px; overflow-y: scroll">
 
         </div>
         <div id="entrada">
@@ -21,7 +25,9 @@
 
     window.history.pushState("", "", "/cliente.html?w=mensajes");
     console.log("recargar")
+    cargarDetallesDeOferta();
     cargarConversaciones();
+    
     var chats;
     var chatSeleccionado=null;
     var nuevaConver=false;
@@ -38,11 +44,12 @@
                 var cont = $("#conversaciones")
 
                 $("#conversaciones").empty();
+                $("#conversaciones").append(" <h2>Lista de chats</h2>")
                 for (var i = 0; i < claves.length; i++) {
 
                     var name = claves[i];
 
-                    $("#conversaciones").append(" <button class='btn' onclick=\"cargarChat('" + name + "')\">" + name + "</button>")
+                    $("#conversaciones").append(" <button class='btn' onclick=\"cargarChat('" + name + "')\">" + "Ver chat de oferta" + "</button>")
 
                 }
 
@@ -164,6 +171,33 @@
             }
         });
         $("#typeBox")[0].value="";
+    }
+
+   function cargarDetallesDeOferta(){
+     
+       data={id:idCancionSeleccionada
+
+       }
+    $.ajax({
+            url: URLbase + "/ofertas/detalle",
+            type: "GET",
+            data: data,
+            dataType: 'json',
+            headers: { "token": token },
+            success: function (respuesta) {
+                var oferta=respuesta.oferta
+                $("#descripcionOferta").empty();
+               var div= $("#descripcionOferta");
+               div.append("<h1>"+oferta.title+"</h1>")
+               div.append("<h2>"+oferta.description+"</h2>")
+               div.append("<h3>"+oferta.user+"</h3>")
+             
+            },
+            error: function (error) {
+                $("#contenedor-principal").load("widget-ofertas.html");
+            }
+        });
+
     }
 
 </script>
