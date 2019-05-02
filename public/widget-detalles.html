@@ -25,12 +25,14 @@
 
     window.history.pushState("", "", "/cliente.html?w=mensajes");
     console.log("recargar")
-    cargarDetallesDeOferta();
-    cargarConversaciones();
-    
     var chats;
     var chatSeleccionado=null;
     var nuevaConver=false;
+    $("#conversaciones").empty();
+    cargarDetallesDeOferta();
+    cargarConversaciones();
+    
+ 
     function cargarConversaciones() {
         $.ajax({
             url: URLbase + "/mensajes/ver",
@@ -105,6 +107,7 @@
 
     function cargarChat(name) {
         nuevaConver=false;
+        console.log("cargando")
         $.ajax({
             url: URLbase + "/mensajes/ver",
             type: "GET",

@@ -23,11 +23,13 @@
     
         window.history.pushState("", "", "/cliente.html?w=mensajes-mi-oferta");
         console.log("recargar")
-        cargarDetallesDeOferta();
-        cargarConversaciones();
         var chats;
         var chatSeleccionado=null;
         var nuevaConver=false;
+        $("#conversaciones").empty();
+        cargarDetallesDeOferta();
+        cargarConversaciones();
+        
         function cargarConversaciones() {
             $.ajax({
                 url: URLbase + "/mensajes/ver",
