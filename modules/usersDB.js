@@ -72,5 +72,24 @@ module.exports = {
                 });
             }
         });
+    },
+    isAdmin: function(usuario,funcionCallback){
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('usuarios');
+                var criterio={email:usuario}
+                collection.find(criterio).toArray( function (err, result) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                       // console.log(result[0])
+                        funcionCallback(result[0].rol=="admin");
+                    }
+                    db.close();
+                });
+            }
+        });
     }
 };

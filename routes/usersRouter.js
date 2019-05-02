@@ -2,6 +2,8 @@ module.exports = function (app, swig, gestorBD) {
 
     app.get("/logout", function (req, res) {
         logUser(null, null, req,res);
+        setMoney(null,res);
+        setRole(null,res);
         res.redirect("/login");//TODO : solo se deberia mostrar el boton cuando el usuario esta logeado, arreglar eso
 
     })
@@ -46,8 +48,7 @@ module.exports = function (app, swig, gestorBD) {
                         //logear al usuario
                         logUser(usuario.email, usuario.rol, req,res);
                         
-                        res.redirect('/'); //TODO: por el momento va eso
-                        //TODO: incluir en la vista el dinero actual
+                        res.redirect('/user/offers'); 
                        
                     }
                 });
@@ -66,7 +67,10 @@ module.exports = function (app, swig, gestorBD) {
     }
 
     function setMoney(money,res){
-        res.cookie("money",money)
+        res.cookie("money",money);
+    }
+    function setRole(role,res){
+        res.cookie("role",role);
     }
 
     app.get("/login", function (req, res) {
@@ -89,6 +93,8 @@ module.exports = function (app, swig, gestorBD) {
                     "&tipoMensaje=alert-danger ");
             } else {
                 logUser(usuarios[0].email, usuarios[0].rol, req,res);
+                setMoney(usuarios[0].money,res);
+                setRole(usuarios[0].rol,res);
                 res.redirect("/user/offers");
             }
         });

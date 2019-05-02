@@ -96,7 +96,7 @@ module.exports = {
 			}
 		});
 	},
-	getOffersPg: function(criterio, pg, funcionCallback) {
+	getOffersPg: function(criterio, usuario,pg, funcionCallback) {
 		this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
 			if (err) {
 				funcionCallback(null);
@@ -125,8 +125,8 @@ module.exports = {
 				functionCallback(null);
 			} else {
 				let collection = db.collection('offers');
-                var criterio = { $and:[{buyer: usuario },{bought:true}]};
-                
+				var criterio = { $and:[{buyer: usuario },{bought:true}]};
+				
 				collection.find(criterio).toArray(function(err, result) {
 					if (err) {
 						functionCallback(null);
