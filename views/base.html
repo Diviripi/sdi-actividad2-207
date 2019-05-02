@@ -8,6 +8,23 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }  </script>
   {% block scripts %} {% endblock %}
 </head>
 
@@ -26,10 +43,19 @@
         <img src="/img/logo.jpg" alt="logo" height="50px" />
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li id="mTienda" class="active"><a href="/tienda">Tienda</a></li>
-          <li id="mPublicaciones"><a href="/publicaciones">Publicaciones</a></li>
-          <li id="mCompras"><a href="/compras">Compras</a></li>
+        <ul id="nav-options" class="nav navbar-nav">
+          <li id="mTienda" class="active"><a href="/store">Tienda</a></li>
+          <li id="mNuevaOferta"><a href="/offers/addOffer">Nueva oferta</a></li>
+          <li id="mMisOfertas"><a href="/user/offers">Mis ofertas</a></li>
+          
+          <li id="mOfertasCompradas"><a href="/user/offers/bought">Compradas</a></li>
+
+          <script>
+            if (getCookie("role") == "admin") {
+              $("#nav-options").append("<li id='usuarios'><a href='/users/list'>Usuarios</a></li>");
+
+            }
+          </script>
         </ul>
         <ul id="userOptions" class="nav navbar-nav navbar-right">
 
@@ -37,32 +63,22 @@
           <script>
 
             var user = getCookie("user");
-            
+
             if (user == "") {
               $("#userOptions")
                 .append("<li><a href='/login'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>");
             } else {
               $("#userOptions")
                 .append("<li><a href='/logout'><span class='glyphicon glyphicon-log-out'></span> Logout</a></li>");
+
+                $("#userOptions")
+                .append("<li ><span class='nav-item' style='color:white;'> Dinero actual: " + getCookie("money") + " $" + "</span></li>");
+
             }
-            function getCookie(cname) {
-              var name = cname + "=";
-              var decodedCookie = decodeURIComponent(document.cookie);
-              var ca = decodedCookie.split(';');
-              for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                  c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                  return c.substring(name.length, c.length);
-                }
-              }
-              return "";
-            }
+
           </script>
-        
-        
+
+
         </ul>
       </div>
     </div>

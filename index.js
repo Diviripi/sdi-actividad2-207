@@ -27,6 +27,9 @@ app.use(
 );
 var crypto = require('crypto');
 var mongo = require('mongodb');
+//mongodb
+var gestorBD = require('./modules/gestorBD.js');
+gestorBD.init(app, mongo);
 var swig = require('swig');
 
 var bodyParser = require('body-parser');
@@ -36,6 +39,46 @@ var jwt = require('jsonwebtoken');
 app.set('jwt', jwt);
 
 //aqui los routers
+
+
+var routerUsuarioSession = express.Router();
+routerUsuarioSession.use(function(req, res, next) {
+	console.log('routerUsuarioSession');
+	console.log(  req.session.usuario)
+	if ( req.session.usuario) {
+		// dejamos correr la petición
+		next();
+	} else {
+		console.log('va a : ' + req.session.destino);
+		res.redirect('/login');
+	}
+});
+//Aplicar routerUsuarioSession
+app.use('/users/*', routerUsuarioSession);
+app.use('/store', routerUsuarioSession);
+app.use('/offers/*', routerUsuarioSession);
+app.use('/user/*', routerUsuarioSession);
+
+
+
+var routerUsuarioAdmin = express.Router();
+routerUsuarioAdmin.use(function(req, res, next) {
+	console.log('HOLAAA');
+	gestorBD.usersDB.isAdmin(req.session.usuario,function(isAdmin){
+		console.log(isAdmin)
+		if(isAdmin){
+			next();
+			
+		}else{
+			res.send("Unauthorized");
+		}
+	})
+	
+});
+//Aplicar routerUsuarioAdmin
+app.use('/users/*', routerUsuarioAdmin);
+
+
 
 var routerUsuarioToken = express.Router();
 routerUsuarioToken.use(function(req, res, next) {
@@ -70,9 +113,7 @@ routerUsuarioToken.use(function(req, res, next) {
 app.use('/api/ofertas', routerUsuarioToken);
 //app.use('/api/mensajes', routerUsuarioToken);
 
-//mongodb
-var gestorBD = require('./modules/gestorBD.js');
-gestorBD.init(app, mongo);
+
 
 //variables
 app.set('port', 8081);
