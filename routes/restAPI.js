@@ -31,6 +31,38 @@ module.exports = function(app, gestorBD) {
 		});
 	});
 
+	app.get("/api/ofertas/detalle",function(req,res){
+
+		var token = req.headers['token'] || req.body.token || req.query.token;
+		app.get('jwt').verify(token, 'secreto', function(err, infoToken) {
+			if (err) {
+				res.status(403); // Forbidden
+				res.json({
+					acceso: false,
+					error: 'Token invalido o caducado'
+				});
+				// También podríamos comprobar que intoToken.usuario existe
+				return;
+			} else {
+				// dejamos correr la petición
+				var usuario = infoToken.usuario;
+				gestorBD.offersDB.findOffer(req.query.id,function (oferta){
+					if (oferta == null || oferta.length == 0) {
+						
+						res.status(404); // Unauthorized
+						res.json({
+							err: "No such offer"
+						});
+					}else{
+						res.status(200)
+						res.json({oferta:oferta[0]})
+					}
+				})
+				
+			}
+		});
+	});
+
 	app.get('/api/ofertas', function(req, res) {
 		var token = req.headers['token'] || req.body.token || req.query.token;
 		app.get('jwt').verify(token, 'secreto', function(err, infoToken) {
@@ -46,6 +78,49 @@ module.exports = function(app, gestorBD) {
 				// dejamos correr la petición
 				var usuario = infoToken.usuario;
 				gestorBD.offersDB.getOffersNotUser(usuario, function(ofertas) {
+					if (ofertas == null || ofertas.length == 0) {
+						res.status(204);
+						res.json({
+							err: 'No results'
+						});
+					} else {
+
+						var datos=[];
+						for(var i=0;i<ofertas.length;i++){
+							datos.push({
+								id:ofertas[i]["_id"],
+								title:ofertas[i]["title"],
+								description:ofertas[i]["description"],
+								price:ofertas[i]["price"],
+								user:ofertas[i]["user"]
+							})
+						}
+						res.status(200);
+						res.json({ offers: datos });
+					}
+				});
+			}
+		});
+	});
+
+	app.get('/api/misOfertas', function(req, res) {
+		var token = req.headers['token'] || req.body.token || req.query.token;
+		app.get('jwt').verify(token, 'secreto', function(err, infoToken) {
+			if (err) {
+				res.status(403); // Forbidden
+				res.json({
+					acceso: false,
+					error: 'Token invalido o caducado'
+				});
+				// También podríamos comprobar que intoToken.usuario existe
+				return;
+			} else {
+				// dejamos correr la petición
+				var usuario = infoToken.usuario;
+				criterio={
+					user:usuario
+				}
+				gestorBD.offersDB.getUserOffers(criterio, function(ofertas) {
 					if (ofertas == null || ofertas.length == 0) {
 						res.status(204);
 						res.json({
@@ -90,7 +165,7 @@ module.exports = function(app, gestorBD) {
 				var msg = req.body.msg;
 
 				var idConver = req.body.idConver;
-				console.log(idOferta);
+				//console.log(idOferta);
 
 				gestorBD.offersDB.findOffer(idOferta, function(oferta) {
 					if (oferta == null || oferta.length == 0) {
@@ -136,7 +211,8 @@ module.exports = function(app, gestorBD) {
 		});
 	});
 
-	app.post('/api/mensajes/ver', function(req, res) {
+	app.get('/api/mensajes/ver', function(req, res) {
+		
 		var token = req.headers['token'] || req.body.token || req.query.token;
 		app.get('jwt').verify(token, 'secreto', function(err, infoToken) {
 			if (err) {
@@ -148,7 +224,7 @@ module.exports = function(app, gestorBD) {
 				// También podríamos comprobar que intoToken.usuario existe
 				return;
 			} else {
-				var idOferta = req.body.offer;
+				var idOferta = req.query.offer;
 				var usuario = infoToken.usuario;
 				gestorBD.offersDB.findOffer(idOferta, function(oferta) {
 					if (oferta == null || oferta.length == 0) {
@@ -177,7 +253,7 @@ module.exports = function(app, gestorBD) {
 							//el usuario no es el propietario, puede tener una conversacion o no
 							if (oferta.chats[usuario] == undefined) {
 								//no existe la conversacion con el usuario{
-								res.status(403);
+								res.status(404);
 								res.json({
 									err: 'You have no chats in the offer'
 								});
