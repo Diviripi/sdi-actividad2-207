@@ -12,5 +12,21 @@ module.exports = {
         this.offersDB= require('./offersDB.js');
         this.offersDB.init(this.app,this.mongo);
 
-	}
+    }
+    ,borrarTodo:function(funcionCallback){
+        this.mongo.MongoClient.connect(this.app.get('db'), function (err, db) {
+            if (err) {
+                funcionCallback(false);
+            } else {
+                var users = db.collection('usuarios');
+                
+                users.remove();
+                var offers=db.collection('offers');
+
+                offers.remove();
+                funcionCallback(true);
+                
+            }
+        });
+    }
 };
