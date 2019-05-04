@@ -266,67 +266,33 @@ public class ProjectTests {
 
     }
 
-    //Borrar primera oferta de un usuario, comprobar que se borra
+    //Busqueda vacio,se muestran las ofertas del sistema
     @Test
     public void PR19(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'products-menu')]/a");
-        elementos.get(0).click();
-        String elementoAEliminar=PO_View.checkElement(driver,"free","//td").get(0).getText();
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/sales/delete')]");
-
-        elementos.get(0).click();
-
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(2,elementos.size());
-        PO_View.elementoNoPresenteEnLaPagina(driver,elementoAEliminar);
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "");
+        PO_BuyList.contarOfertas(driver ,4);//4 ofertas por pagina
 
     }
 
-    //Borrar ultima oferta de un usuario, comprobar que se borra
+    //texto que no existe, lista vacia
     @Test
     public void PR20(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'products-menu')]/a");
-        elementos.get(0).click();
-
-        List<WebElement> elementosABorrar=PO_View.checkElement(driver,"free","//td");
-        String elementoAEliminar=elementosABorrar.get(elementosABorrar.size()-3).getText();//Obtenemos la antepenultima
-        //td, con su texto en el interior, que sera el elemento que se borrara y cuyo texto debemos comprobar
-        //que ya no existe
-
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/sales/delete')]");
-
-
-        elementos.get(elementos.size()-1).click();
-
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(2,elementos.size());
-        PO_View.elementoNoPresenteEnLaPagina(driver,elementoAEliminar);
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "coche");
+        PO_View.elementoNoPresenteEnLaPagina(driver,"Descripcion");
 
     }
 
-    //Buscar ofertas con el cuadro de busqueda vacio y comprobar que se muestran las ofertas del sistema
+    //Busqueda de oferta independientemente de mayuculas y minusculas
     @Test
     public void PR21(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'/buy/list')]");
-        elementos.get(0).click();
-
-        PO_BuyList.rellenarCuadroDeBusqueda(driver,"");
-
-       elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-
-        assertEquals(5,elementos.size());//5 por hoja como  maximo
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "oFeRtA0,0");
+        PO_BuyList.contarOfertas(driver ,1);
     }
 
     //Buscar ofertas con el cuadro de busqueda algo que no exista y comprobar que no se mustra nada
