@@ -100,17 +100,14 @@ public class ProjectTests {
         PO_View.checkElement(driver, "text", "Email incorrecto");
     }
 
-    //Registro de usuario con email ya existente
+    //Inicio de sesion valido
     @Test
     public void PR04() {
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-        PO_RegisterView.fillForm(driver, "emailExistente", "ejemplo", "ejemplo", "123456", "123456");
-        driver.navigate().to(URL);//Vuelta al menu principal
+        //PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_LoginView.fillForm(driver,  "user0@email.com", "user");
+        PO_View.checkElement(driver, "text", "My offers");
 
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-        PO_RegisterView.fillForm(driver, "emailExistente", "ejemplo", "ejemplo", "123456", "123456");
 
-        PO_View.checkElement(driver, "text", "email ya existente");
     }
 
     //Inicio de sesion con datos validos (administrador)
