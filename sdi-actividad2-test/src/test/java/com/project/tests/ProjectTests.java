@@ -133,13 +133,13 @@ public class ProjectTests {
 
     }
 
-    //inicio de sesion con datos invalidos(usuario estandar,email existente, pero contraseña incorrecta)
+    //inicio de sesion y posterior logout
     @Test
     public void PR08() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "654321");
-
-        PO_LoginView.checkElement(driver, "text", "Identificate");
+        PO_LoginView.fillForm(driver,  "user0@email.com", "user");
+        PO_View.checkElement(driver, "text", "My offers");
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+        PO_LoginView.checkElement(driver, "text", "Identificación");
 
     }
 
