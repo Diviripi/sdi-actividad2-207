@@ -100,44 +100,36 @@ public class ProjectTests {
         PO_View.checkElement(driver, "text", "Email incorrecto");
     }
 
-    //Registro de usuario con email ya existente
+    //Inicio de sesion valido
     @Test
     public void PR04() {
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-        PO_RegisterView.fillForm(driver, "emailExistente", "ejemplo", "ejemplo", "123456", "123456");
-        driver.navigate().to(URL);//Vuelta al menu principal
+        //PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_LoginView.fillForm(driver,  "user0@email.com", "user");
+        PO_View.checkElement(driver, "text", "My offers");
 
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-        PO_RegisterView.fillForm(driver, "emailExistente", "ejemplo", "ejemplo", "123456", "123456");
-
-        PO_View.checkElement(driver, "text", "email ya existente");
     }
 
-    //Inicio de sesion con datos validos (administrador)
+    //Inicio de sesion con datos invalidos (email existente,pass incorrecta)
     @Test
     public void PR05() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-        PO_NavView.checkElement(driver, "id", "users-list");
+        PO_LoginView.fillForm(driver,  "user0@email.com", "nouser");
+        PO_View.checkElement(driver, "text", "incorrecto");
     }
 
-    //Inicio de sesion con datos validos (estandar)
+    //Inicio de sesion con datos invalidos (email vacio,pass vacia)
     @Test
     public void PR06() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-        PO_NavView.checkElement(driver, "id", "products-menu");
-        PO_NavView.elementoNoPresenteEnLaPagina(driver, "Ver usuarios");//Comprobar que no aparecen las opciones de
-        // admin
+        PO_LoginView.fillForm(driver,  "", "nouser");
+        PO_View.checkElement(driver ,"free","//button[contains(text(),'Login')]");
+        PO_LoginView.fillForm(driver,  "user0@email.com", "");
+        PO_View.checkElement(driver ,"free","//button[contains(text(),'Login')]");
     }
 
-    //inicio de sesion con datos invalidos(email y password vacios)
+    //inicio de sesion con datos invalidos(email no existente)
     @Test
     public void PR07() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "", "");
-
-        PO_LoginView.checkElement(driver, "text", "Identificate");
+        PO_LoginView.fillForm(driver,  "noexiste@email.com", "nouser");
+        PO_View.checkElement(driver, "text", "incorrecto");
 
     }
 
