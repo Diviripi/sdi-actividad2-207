@@ -3,7 +3,7 @@ var express = require('express');
 
 var app = express();
 //app.use(express.bodyParser());
-var https = require('https');
+var http= require('http');
 var fs = require('fs');
 var rest = require('request');
 app.set('rest',rest);
@@ -63,7 +63,7 @@ app.use('/user/*', routerUsuarioSession);
 
 var routerUsuarioAdmin = express.Router();
 routerUsuarioAdmin.use(function(req, res, next) {
-	console.log('HOLAAA');
+	
 	gestorBD.usersDB.isAdmin(req.session.usuario,function(isAdmin){
 		console.log(isAdmin)
 		if(isAdmin){
@@ -148,14 +148,6 @@ app.use(function(err, req, res, next) {
 });
 
 // lanzar el servidor
-https
-	.createServer(
-		{
-			key: fs.readFileSync('certificates/alice.key'),
-			cert: fs.readFileSync('certificates/alice.crt')
-		},
-		app
-	)
-	.listen(app.get('port'), function() {
-		console.log('Servidor activo');
-	});
+app.listen(app.get('port'),function(){
+	console.log("Servidor activo")
+});
