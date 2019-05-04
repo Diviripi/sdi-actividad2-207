@@ -107,15 +107,13 @@ public class ProjectTests {
         PO_LoginView.fillForm(driver,  "user0@email.com", "user");
         PO_View.checkElement(driver, "text", "My offers");
 
-
     }
 
-    //Inicio de sesion con datos validos (administrador)
+    //Inicio de sesion con datos invalidos (email existente,pass incorrecta)
     @Test
     public void PR05() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-        PO_NavView.checkElement(driver, "id", "users-list");
+        PO_LoginView.fillForm(driver,  "user0@email.com", "nouser");
+        PO_View.checkElement(driver, "text", "incorrecto");
     }
 
     //Inicio de sesion con datos validos (estandar)
