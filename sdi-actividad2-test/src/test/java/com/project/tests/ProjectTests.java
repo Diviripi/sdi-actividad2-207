@@ -286,21 +286,13 @@ public class ProjectTests {
 
     }
 
-    //Buscar ofertas con el cuadro de busqueda vacio y comprobar que se muestran las ofertas del sistema
+    //Busqueda de oferta independientemente de mayuculas y minusculas
     @Test
     public void PR21(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'/buy/list')]");
-        elementos.get(0).click();
-
-        PO_BuyList.rellenarCuadroDeBusqueda(driver,"");
-
-       elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-
-        assertEquals(5,elementos.size());//5 por hoja como  maximo
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "oFeRtA0,0");
+        PO_BuyList.contarOfertas(driver ,1);
     }
 
     //Buscar ofertas con el cuadro de busqueda algo que no exista y comprobar que no se mustra nada
