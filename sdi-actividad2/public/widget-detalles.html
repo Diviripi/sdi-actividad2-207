@@ -1,0 +1,206 @@
+<div id="widget-mensajes">
+    <div id="descripcionOferta">
+
+    </div>
+   
+    <div id="conversaciones">
+        <h1>Lista de chats</h1>
+        <button class="btn" onclick="cargarChat(id)"></button>
+    </div>
+    <div id="chatActual">
+        <div id="listaMensajes" style="max-height: 300px; overflow-y: scroll">
+
+        </div>
+        <div id="entrada">
+            <input type="text" id="typeBox">
+            <button id="botonEnviar" onclick="enviarMensaje()">Enviar</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    window.history.pushState("", "", "/cliente.html?w=mensajes");
+    console.log(idCancionSeleccionada)
+    var chats;
+    var chatSeleccionado=null;
+    var nuevaConver=false;
+    $("#conversaciones").empty();
+    cargarDetallesDeOferta();
+    cargarConversaciones();
+    
+ 
+    function cargarConversaciones() {
+        $.ajax({
+            url: URLbase + "/mensajes/ver",
+            type: "GET",
+            data: { offer: idCancionSeleccionada },
+            dataType: 'json',
+            headers: { "token": token },
+            success: function (respuesta) {
+                var claves = Object.keys(respuesta.chats);
+                chats = respuesta.chats;
+                var cont = $("#conversaciones")
+
+                $("#conversaciones").empty();
+                $("#conversaciones").append(" <h2>Lista de chats</h2>")
+                for (var i = 0; i < claves.length; i++) {
+
+                    var name = claves[i];
+
+                    $("#conversaciones").append(" <button class='btn' onclick=\"cargarChat('" + name + "')\">" + "Ver chat de oferta" + "</button>")
+
+                }
+
+
+            },
+            error: function (error) {
+
+                if (error.status = 404) {
+
+                    $("#conversaciones").empty();
+                    $("#conversaciones").append("<button class='btn  btn-primary'  onclick=\"nuevoChat('" + idCancionSeleccionada + "')\">Nueva conversacion</button>")
+                } else {
+                    $("#contenedor-principal").load("widget-login.html");
+                }
+
+            }
+        });
+    }
+
+    function nuevoChat(id) {
+        console.log("nueva conver");
+        nuevaConver=true;
+        var msg="Conversacion iniciada";
+        
+        var idConver;
+        if(!nuevaConver){
+            idConver=chatSeleccionado;
+        }
+        var data={
+            offer:idCancionSeleccionada,
+            msg:msg,
+            idConver:idConver
+        }
+        
+        $.ajax({
+            url: URLbase + "/mensajes/nuevo",
+            type: "POST",
+            data: data,
+            dataType: 'json',
+            headers: { "token": token },
+            success: function (respuesta) {
+                console.log("enviado")
+            },
+            error: function (error) {
+                console.log("error al enviar")
+            }
+        });
+        $("#typeBox")[0].value="";
+       // cargarConversaciones();
+
+
+    }
+
+    function cargarChat(name) {
+        nuevaConver=false;
+        console.log("cargando")
+        $.ajax({
+            url: URLbase + "/mensajes/ver",
+            type: "GET",
+            data: { offer: idCancionSeleccionada },
+            dataType: 'json',
+            headers: { "token": token },
+            success: function (respuesta) {
+               
+                chats = respuesta.chats;
+               
+            },
+            error: function (error) {
+
+
+            }
+        });
+
+
+        chatSeleccionado = name;
+        var mensajes = chats[name];
+        $("#listaMensajes").empty();
+        for (var i = 0; i < mensajes.length; i++) {
+            var msg = mensajes[i]
+            $("#listaMensajes").append("<div>" + msg.autor + ":     " + msg.msg + "[" + msg.date + "]</div>")
+
+        }
+    }
+
+    window.setInterval(function () {
+        $("#botonEnviar").attr("disabled",true);
+        cargarConversaciones();
+        if (chatSeleccionado) {
+            $("#botonEnviar").attr("disabled",false);
+            cargarChat(chatSeleccionado);
+
+           
+        }
+    }, 1000);
+
+    function enviarMensaje(){
+        var msg=$("#typeBox")[0].value
+        
+        var idConver;
+        if(!nuevaConver){
+            idConver=chatSeleccionado;
+        }
+        var data={
+            offer:idCancionSeleccionada,
+            msg:msg,
+            idConver:idConver
+        }
+        
+        $.ajax({
+            url: URLbase + "/mensajes/nuevo",
+            type: "POST",
+            data: data,
+            dataType: 'json',
+            headers: { "token": token },
+            success: function (respuesta) {
+                console.log("enviado")
+            },
+            error: function (error) {
+                console.log("error al enviar")
+            }
+        });
+        $("#typeBox")[0].value="";
+    }
+
+   function cargarDetallesDeOferta(){
+     
+       data={id:idCancionSeleccionada
+
+       }
+    $.ajax({
+            url: URLbase + "/ofertas/detalle",
+            type: "GET",
+            data: data,
+            dataType: 'json',
+            headers: { "token": token },
+            success: function (respuesta) {
+                var oferta=respuesta.oferta
+                $("#descripcionOferta").empty();
+               var div= $("#descripcionOferta");
+               div.append("<h1>"+oferta.title+"</h1>")
+               div.append("<h2>"+oferta.description+"</h2>")
+               div.append("<h3>"+oferta.user+"</h3>")
+             
+            },
+            error: function (error) {
+                $("#contenedor-principal").load("widget-ofertas.html");
+            }
+        });
+
+    }
+
+</script>
