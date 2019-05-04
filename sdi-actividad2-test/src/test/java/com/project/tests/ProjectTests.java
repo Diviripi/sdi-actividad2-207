@@ -266,23 +266,13 @@ public class ProjectTests {
 
     }
 
-    //Borrar primera oferta de un usuario, comprobar que se borra
+    //Busqueda vacio,se muestran las ofertas del sistema
     @Test
     public void PR19(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'products-menu')]/a");
-        elementos.get(0).click();
-        String elementoAEliminar=PO_View.checkElement(driver,"free","//td").get(0).getText();
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/sales/delete')]");
-
-        elementos.get(0).click();
-
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(2,elementos.size());
-        PO_View.elementoNoPresenteEnLaPagina(driver,elementoAEliminar);
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "");
+        PO_BuyList.contarOfertas(driver ,4);//4 ofertas por pagina
 
     }
 
