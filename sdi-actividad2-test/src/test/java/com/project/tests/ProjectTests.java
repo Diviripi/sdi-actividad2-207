@@ -276,29 +276,13 @@ public class ProjectTests {
 
     }
 
-    //Borrar ultima oferta de un usuario, comprobar que se borra
+    //texto que no existe, lista vacia
     @Test
     public void PR20(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'products-menu')]/a");
-        elementos.get(0).click();
-
-        List<WebElement> elementosABorrar=PO_View.checkElement(driver,"free","//td");
-        String elementoAEliminar=elementosABorrar.get(elementosABorrar.size()-3).getText();//Obtenemos la antepenultima
-        //td, con su texto en el interior, que sera el elemento que se borrara y cuyo texto debemos comprobar
-        //que ya no existe
-
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/sales/delete')]");
-
-
-        elementos.get(elementos.size()-1).click();
-
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(2,elementos.size());
-        PO_View.elementoNoPresenteEnLaPagina(driver,elementoAEliminar);
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "coche");
+        PO_View.elementoNoPresenteEnLaPagina(driver,"Descripcion");
 
     }
 

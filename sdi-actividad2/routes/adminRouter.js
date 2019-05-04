@@ -86,7 +86,7 @@ module.exports = function(app, swig, gestorBD) {
 				var buyerF = i == 4 ? users[0].email : users[i + 1].email;
 				var userF = users[i].email;
 				var newOffer = {
-					title: 'Oferta[' + j + '] usuario[' + i + ']',
+					title: 'Oferta' + j + ',' + i + '',
 					description: 'Descripcion oferta[' + j + '] usuario[' + i + ']',
 					price: 40 + 40 * j,
 					date: new Date().toLocaleDateString(),
