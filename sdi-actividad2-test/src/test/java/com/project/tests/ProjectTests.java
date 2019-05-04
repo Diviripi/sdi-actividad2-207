@@ -146,7 +146,7 @@ public class ProjectTests {
     //no aparece el boton de logout si no esta autenticado
     @Test
     public void PR09() {
-        PO_View.elementoNoPresenteEnLaPagina(driver,"logout");//falla porq encuentra el texto en el scrip
+        PO_View.elementoNoPresenteEnLaPagina(driver,"logout");//falla porque encuentra el texto en el script
         //pero en realidad no esta en la pagina
 
     }
