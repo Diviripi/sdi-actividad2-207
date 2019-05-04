@@ -17,7 +17,7 @@ public class PO_RegisterView extends PO_NavView {
 		name.clear();
 		name.sendKeys(namep);
 
-		WebElement lastname = driver.findElement(By.name("lastName"));
+		WebElement lastname = driver.findElement(By.name("surname"));
 		lastname.click();
 		lastname.clear();
 		lastname.sendKeys(lastnamep);
