@@ -320,4 +320,16 @@ public class ProjectTests {
         PO_View.checkElement(driver,"text","No tienes");
     }
 
+
+    //ver ofertas compradas
+    @Test
+    public void PR25(){
+        PO_LoginView.fillForm(driver, "user1@email.com", "user");
+        PO_HomeView.clickOption(driver, "user/offers/bought", "text", "bought");
+        PO_BoughtOffers.countMyOffers(driver,2);
+
+    }
+
+
+
   }
