@@ -210,26 +210,16 @@ public class ProjectTests {
 
     }
 
-    //Ir a la lista de los usuarios,borrar el ultimo de la lista y comprobar que es ultimo desaparece
+    //nueva oferta y ver que aparece
     @Test
     public void PR14(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-        PO_NavView.clickOption(driver, "/users/list", "class", "btn btn-primary");
-        List<WebElement> elementos = PO_View
-                .checkElement(driver, "free", "//input");
-        elementos.get(elementos.size()-1).click();
 
-        List<WebElement> elementosABorrar=PO_View.checkElement(driver,"free","//td");
-        String elementoAEliminar=elementosABorrar.get(elementosABorrar.size()-3).getText();//Obtenemos la antepenultima
-        //td, con su texto en el interior, que sera el elemento que se borrara y cuyo texto debemos comprobar
-        //que ya no existe
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "/offers/addOffer", "class", "btn btn-primary");
+        PO_AddProduct.rellenarFormulario(driver,"NuevoTitulo","Descripcion","10");
+        //redirigido a mis ofertas
+        PO_View.checkElement(driver,"text","NuevoTitulo");
 
-        PO_ListUsers.clickDeleteButton(driver);
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(5,elementos.size());
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,elementoAEliminar);
     }
 
     //Ir a la lista de los usuarios,borrar 3 usuarios, comprobar que la lista se actualiza y esos usuarios desaparecen
