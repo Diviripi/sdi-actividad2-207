@@ -1,6 +1,7 @@
 package com.project.tests.pageobjects;
 
 import com.project.tests.util.SeleniumUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -52,5 +53,10 @@ public class PO_NavView extends PO_View {
 		// CLickamos la opción Inglés partiendo de la opción Español
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", textLanguage, getTimeout());
 		elementos.get(0).click();
+	}
+
+    public static void logoutNoPresente(WebDriver driver) {
+		WebElement barraUserOptions = driver.findElement(By.id("userOptions"));
+    	assertTrue("Elemento logout aun presente",!barraUserOptions.getText().contains("Logout"));
 	}
 }

@@ -93,6 +93,34 @@ module.exports = function(app, swig, gestorBD) {
 				if (j == 1) {
 					priceF = 100;
 				}
+				var chatF={};
+				chatF[buyerF.split("@")[0]]=[
+					{
+						autor: buyerF,
+						msg: 'Mensaje 1',
+						date: new Date().toISOString(),
+						leido: false
+					},
+					{
+						autor: buyerF,
+						msg: 'Mensaje 2',
+						date: new Date().toISOString(),
+						leido: false
+					},
+					{
+						autor: userF,
+						msg: 'Mensaje 3',
+						date: new Date().toISOString(),
+						leido: false
+					},
+					{
+						autor: userF,
+						msg: 'Mensaje 4',
+						date: new Date().toISOString(),
+						leido: false
+					}
+
+				]
 				var newOffer = {
 					title: 'Oferta' + j + ',' + i + '',
 					description: 'Descripcion oferta[' + j + '] usuario[' + i + ']',
@@ -102,34 +130,7 @@ module.exports = function(app, swig, gestorBD) {
 					user: userF,
 					bought: boughtF,
 					buyer: boughtF ? buyerF : '',
-					chats: {
-						buyerF: [
-							{
-								autor: buyerF,
-								msg: 'Mensaje 1',
-								date: new Date().toISOString(),
-								leido: false
-							},
-							{
-								autor: buyerF,
-								msg: 'Mensaje 2',
-								date: new Date().toISOString(),
-								leido: false
-							},
-							{
-								autor: userF,
-								msg: 'Mensaje 3',
-								date: new Date().toISOString(),
-								leido: false
-							},
-							{
-								autor: userF,
-								msg: 'Mensaje 4',
-								date: new Date().toISOString(),
-								leido: false
-							}
-						]
-					}
+					chats: chatF
 				};
 
 				offers.push(newOffer);
