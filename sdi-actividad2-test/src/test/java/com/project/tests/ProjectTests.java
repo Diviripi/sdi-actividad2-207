@@ -215,32 +215,24 @@ public class ProjectTests {
     public void PR14(){
 
         PO_LoginView.fillForm(driver, "user0@email.com", "user");
+
         PO_HomeView.clickOption(driver, "/offers/addOffer", "class", "btn btn-primary");
+
         PO_AddProduct.rellenarFormulario(driver,"NuevoTitulo","Descripcion","10");
         //redirigido a mis ofertas
         PO_View.checkElement(driver,"text","NuevoTitulo");
 
     }
 
-    //Ir a la lista de los usuarios,borrar 3 usuarios, comprobar que la lista se actualiza y esos usuarios desaparecen
+    //rellenar oferta con datos invalidos, campo vacio
 
     @Test
     public void PR15(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-        PO_NavView.clickOption(driver, "/users/list", "class", "btn btn-primary");
-        List<WebElement> elementos = PO_View
-                .checkElement(driver, "free", "//input");
-        elementos.get(0).click();
-        elementos.get(1).click();
-        elementos.get(2).click();
-        PO_ListUsers.clickDeleteButton(driver);
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(3,elementos.size());
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,"Ivan");
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,"Javi");
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,"User01");
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "/offers/addOffer", "class", "btn btn-primary");
+        PO_AddProduct.rellenarFormulario(driver,"","Titulo vacio","10");
+        //redirigido a mis ofertas
+        PO_HomeView.checkElement(driver,"free","//h2[contains(text(),'Add')]");
     }
 
     //Ir al formulario de alta de oferta, rellenarla con datos validos, y comprobar que la oferta se ha añadido al
