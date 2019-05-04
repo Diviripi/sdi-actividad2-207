@@ -210,64 +210,36 @@ public class ProjectTests {
 
     }
 
-    //Ir a la lista de los usuarios,borrar el ultimo de la lista y comprobar que es ultimo desaparece
+    //nueva oferta y ver que aparece
     @Test
     public void PR14(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-        PO_NavView.clickOption(driver, "/users/list", "class", "btn btn-primary");
-        List<WebElement> elementos = PO_View
-                .checkElement(driver, "free", "//input");
-        elementos.get(elementos.size()-1).click();
 
-        List<WebElement> elementosABorrar=PO_View.checkElement(driver,"free","//td");
-        String elementoAEliminar=elementosABorrar.get(elementosABorrar.size()-3).getText();//Obtenemos la antepenultima
-        //td, con su texto en el interior, que sera el elemento que se borrara y cuyo texto debemos comprobar
-        //que ya no existe
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
 
-        PO_ListUsers.clickDeleteButton(driver);
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(5,elementos.size());
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,elementoAEliminar);
+        PO_HomeView.clickOption(driver, "/offers/addOffer", "class", "btn btn-primary");
+
+        PO_AddProduct.rellenarFormulario(driver,"NuevoTitulo","Descripcion","10");
+        //redirigido a mis ofertas
+        PO_View.checkElement(driver,"text","NuevoTitulo");
+
     }
 
-    //Ir a la lista de los usuarios,borrar 3 usuarios, comprobar que la lista se actualiza y esos usuarios desaparecen
+    //rellenar oferta con datos invalidos, campo vacio
 
     @Test
     public void PR15(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-        PO_NavView.clickOption(driver, "/users/list", "class", "btn btn-primary");
-        List<WebElement> elementos = PO_View
-                .checkElement(driver, "free", "//input");
-        elementos.get(0).click();
-        elementos.get(1).click();
-        elementos.get(2).click();
-        PO_ListUsers.clickDeleteButton(driver);
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(3,elementos.size());
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,"Ivan");
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,"Javi");
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,"User01");
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "/offers/addOffer", "class", "btn btn-primary");
+        PO_AddProduct.rellenarFormulario(driver,"","Titulo vacio","10");
+        //redirigido a mis ofertas
+        PO_HomeView.checkElement(driver,"free","//h2[contains(text(),'Add')]");
     }
 
-    //Ir al formulario de alta de oferta, rellenarla con datos validos, y comprobar que la oferta se ha añadido al
-    //listado de ofertas del usuario
+    //Mostar el listado de ofertas , y ver que se muestran todas las del usuario
     @Test
     public void PR16(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'products-menu')]/a");
-        elementos.get(0).click();
-        // Esperamos a aparezca la opción de desconectar
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/sales/addProduct')]");
-        elementos.get(0).click();
-
-        PO_AddProduct.rellenarFormulario(driver,"NuevoElemento","Una descripcion","12");
-        PO_AddProduct.checkElement(driver,"text","NuevoElemento");
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_MyOffers.countOffers(driver,3);
     }
 
     //Ir al formulario de alta de oferta, rellenarla con datos invalidos, y comprobar que se muestra el error en la pagina
