@@ -1,4 +1,4 @@
-package com.project.tests;
+package com.project.tests.util;
 
 
 import com.project.tests.pageobjects.*;
@@ -365,6 +365,31 @@ public class ProjectTests {
         driver.navigate().to(URL_CLIENTE_REST);
         PO_LoginViewAPI.fillForm(driver, "user0@email.com", "user");
         PO_OfertasAPI.contarOfertas(driver,12);//3 ofertas por otros 4 usuarios =12
+
+    }
+
+    //Mensaje nuevo a una oferta
+    @Test
+    public void PR33(){
+        driver.navigate().to(URL_CLIENTE_REST);
+        PO_LoginViewAPI.fillForm(driver, "user0@email.com", "user");
+        PO_OfertasAPI.mensajeOferta(driver,"Oferta0,1");
+        PO_DetallesOferta.nuevaConvesacion(driver);
+        PO_DetallesOferta.verChat(driver);
+        PO_View.checkElement(driver,"text","iniciada");
+
+    }
+
+    //Mensaje a oferta existente
+    @Test
+    public void PR34(){
+        driver.navigate().to(URL_CLIENTE_REST);
+        PO_LoginViewAPI.fillForm(driver, "user2@email.com", "user");
+        PO_OfertasAPI.mensajeOferta(driver,"Oferta0,1");
+
+        PO_DetallesOferta.verChat(driver);
+        PO_DetallesOferta.enviarMensaje(driver,"Selenium");
+        PO_View.checkElement(driver,"text","Selenium");
 
     }
 

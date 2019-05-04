@@ -12,4 +12,10 @@ public class PO_OfertasAPI  extends PO_NavView{
         List<WebElement> elementos = PO_View.checkElement(driver, "free", "//td[contains(text(),'Descripcion')]");
         assertTrue("El numero de ofertas no coincide",elementos.size()==numeroOfertas);
     }
+
+    public static void mensajeOferta(WebDriver driver, String nombreOferta) {
+        List<WebElement> elementos = PO_View.checkElement(driver, "free",
+                "//td[contains(text(),'"+nombreOferta+"')]/../td[position()=5]");
+        elementos.get(0).click();
+    }
 }
