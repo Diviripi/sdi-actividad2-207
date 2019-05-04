@@ -339,4 +339,24 @@ public class ProjectTests {
 
     }
 
+    //Login en api contra incorrecta
+    @Test
+    public void PR30() {
+        driver.navigate().to(URL_CLIENTE_REST);
+        PO_LoginViewAPI.fillForm(driver, "user1@email.com", "nouser");
+        PO_View.checkElement(driver, "text", "encontrado");
+
+    }
+
+    //Login en api campos vacios
+    @Test
+    public void PR31() {
+        driver.navigate().to(URL_CLIENTE_REST);
+        PO_LoginViewAPI.fillForm(driver, "", "nouser");
+        PO_View.checkElement(driver, "text",  "vacio");
+        PO_LoginViewAPI.fillForm(driver, "sdsds", "");
+        PO_View.checkElement(driver, "text", "vacio");
+
+    }
+
 }
