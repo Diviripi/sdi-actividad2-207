@@ -6,66 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5437a6-d2d3-46d7-a7a8-3039d0b0eaad" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/sdi-entrega1-n .doc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/CustomConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/ProjectApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/WebSecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controllers/BuyController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controllers/ConversationController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controllers/ProductController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/controllers/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entities/Conversation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entities/Message.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entities/Product.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/entities/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/repositories/ConversationRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/repositories/MessageRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/repositories/ProductRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/repositories/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/services/ConversationService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/services/InsertSampleDataService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/services/MessageService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/services/ProductService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/services/RolesService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/services/SecurityService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/services/UserDetailsServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/services/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/validators/AddProductValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/validators/SignUpFormValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages_en.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages_es.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/img/fondo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/img/icon.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/img/icon_UK.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/img/icon_spain.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/img/logo-1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/img/logo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/script/languages.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bought/list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/buy/error.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/buy/list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/conversation/list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/head.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/nav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/pagination.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/conversation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/newMessage.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sales/addProduct.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sales/highlightError.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sales/highlighted.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/sales/list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/signup.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/users/list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/project/tests/ProjectTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/project/tests/ProjectTests.java" afterDir="false" />
-    </list>
+    <list default="true" id="cd5437a6-d2d3-46d7-a7a8-3039d0b0eaad" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,8 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/project/tests/ProjectTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1040">
-              <caret line="55" selection-start-line="55" selection-end-line="55" />
+            <state relative-caret-position="260">
+              <caret line="16" column="48" lean-forward="true" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2741#2742#0" expanded="true" />
@@ -193,7 +134,7 @@
         <option value="Javi" />
       </list>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
@@ -345,7 +286,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556972606357" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556972668372" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../sdi-actividad2-207/sdi-actividad2-test" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
@@ -353,7 +294,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -709,7 +650,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87334000" />
+    <option name="totallyTimeSpent" value="87684000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1240,8 +1181,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/project/tests/ProjectTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1040">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        <state relative-caret-position="260">
+          <caret line="16" column="48" lean-forward="true" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2741#2742#0" expanded="true" />
