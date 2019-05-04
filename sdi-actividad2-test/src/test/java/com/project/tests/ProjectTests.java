@@ -151,18 +151,15 @@ public class ProjectTests {
 
     }
 
-    //Click en la opcion de salir de sesion y comprobar que se redirige al login
+    //Mostrar listado de usuarios y ver que se muestran todos, tambien comprobamos aqui que el admin tiene opciones
+    //de admin
     @Test
     public void PR10() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
 
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'account-menu')]/a");
-        elementos.get(0).click();
-        // Esperamos a aparezca la opción de desconectar
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/logout')]");
-        elementos.get(0).click();
-        PO_LoginView.checkElement(driver, "text", "Identificate");
+        PO_LoginView.fillForm(driver, "admin@admin.com", "admin");
+        PO_HomeView.clickOption(driver, "/users/list", "class", "btn btn-primary");
+        PO_View.checkElement(driver,"text","Users");
+        PO_ListUsers.countUsers(driver,5);//5 mas el admin
     }
 
     //Comprobar boton cerrar sesion si no esta visivle cuando el usauro no esta autenticado
