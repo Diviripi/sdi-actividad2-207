@@ -24,33 +24,38 @@
 
     $("#boton-login").click(function () {
 
+      
+        if (email.value == "" || password.value == "") {
+            $("#widget-login")
+                        .prepend("<div class='alert alert-danger'>Campo vacio</div>");
+        } else {
+            var data = { email: email, password: password }
+            var settings = {
+                url: URLbase + "/login",
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    email: $("#email").val(),
+                    password: $("#password").val()
+                },
 
-        
-        var data = { email: email, password: password }
-        var settings = {
-            url: URLbase+"/login",
-            type: "POST",
-            dataType: 'json',
-            data: {
-                email: $("#email").val(),
-                password: $("#password").val()
-            },
+                success: function (respuesta) {
+                    // console.log(respuesta.token); // <- Prueba
+                    token = respuesta.token;
+                    Cookies.set('token', respuesta.token);
+                    $("#contenedor-principal").load("widget-ofertas.html");
+                },
+                error: function (error) {
+                    Cookies.remove('token');
 
-            success: function (respuesta) {
-               // console.log(respuesta.token); // <- Prueba
-                token = respuesta.token;
-                Cookies.set('token', respuesta.token);
-                $("#contenedor-principal").load("widget-ofertas.html");
-            },
-            error: function (error) {
-                Cookies.remove('token');
-                
-                $("#widget-login")
-                    .prepend("<div class='alert alert-danger'>Usuario no encontrado</div>");
+                    $("#widget-login")
+                        .prepend("<div class='alert alert-danger'>Usuario no encontrado</div>");
+                }
             }
+
+            $.ajax(settings);
         }
-       
-        $.ajax(settings);
+
 
 
 
