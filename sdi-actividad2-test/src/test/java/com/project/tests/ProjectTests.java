@@ -81,7 +81,7 @@ public class ProjectTests {
         PO_View.checkElement(driver, "text", "My offers");
     }
 
-    //Registro de Usuario con datos invalidos (email vacio,nombre vacio,apellidos vacios)
+    //Registro de Usuario con datos invalidos (email vacio,nombre vacio,apellidos vacios,contraseña mal repetida)
     @Test
     public void PR02() {
         PO_HomeView.clickOption(driver, "register", "class", "btn btn-primary");
@@ -92,12 +92,12 @@ public class ProjectTests {
         PO_View.checkElement(driver, "text", "match");
     }
 
-    //Registro de usuario con repeticion de password erronea
+    //Usuaio ya existente (admin)
     @Test
     public void PR03() {
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-        PO_RegisterView.fillForm(driver, "email", "ejemplo", "ejemplo", "123456", "654321");
-        PO_View.checkElement(driver, "text", "Las contraseñas no coinciden");
+        PO_HomeView.clickOption(driver, "register", "class", "btn btn-primary");
+        PO_RegisterView.fillForm(driver, "admin@admin.com", "Ya existente", "existente", "123", "123");
+        PO_View.checkElement(driver, "text", "Email incorrecto");
     }
 
     //Registro de usuario con email ya existente
