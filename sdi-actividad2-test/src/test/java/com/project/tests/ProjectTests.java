@@ -187,30 +187,27 @@ public class ProjectTests {
         PO_ListUsers.borrarUsuario(driver,4);
 
 
-        PO_ListUsers.countUsers(driver,4);//5 mas el admin
+        PO_ListUsers.countUsers(driver,4);
         PO_View.elementoNoPresenteEnLaPagina(driver,"user4");
 
 
     }
 
-    //Ir a la lista de usuarios,borrar el primer usuario de la lista, comprobar que la lista se actualiza y dicho
-    //usuario desaparece
-    //Hay que tener en cuenta que, dado que solo existe un admin en el sistema, se ha optado por no dar la opcion
-    //de borrarlo, por lo que no aparece la check box para este proposito, el admin es el primer usuario, asi que
-    //para completar esta prueba se borrara el segundo usuario (Javi), disculpen las molestias
+    //borar 3 usuarios
     @Test
     public void PR13(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-        PO_NavView.clickOption(driver, "/users/list", "class", "btn btn-primary");
-        List<WebElement> elementos = PO_View
-                .checkElement(driver, "free", "//input");
-        elementos.get(0).click();
-        PO_ListUsers.clickDeleteButton(driver);
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(5,elementos.size());
-        PO_ListUsers.elementoNoPresenteEnLaPagina(driver,"Javi");
+        PO_LoginView.fillForm(driver, "admin@admin.com", "admin");
+        PO_HomeView.clickOption(driver, "/users/list", "class", "btn btn-primary");
+        PO_View.checkElement(driver,"text","Users");
+        PO_ListUsers.countUsers(driver,5);//5 mas el admin
+        PO_ListUsers.borrarUsuario(driver,0,1,2);
+
+
+        PO_ListUsers.countUsers(driver,2);
+        PO_View.elementoNoPresenteEnLaPagina(driver,"user0");
+        PO_View.elementoNoPresenteEnLaPagina(driver,"user1");
+        PO_View.elementoNoPresenteEnLaPagina(driver,"user2");
+
     }
 
     //Ir a la lista de los usuarios,borrar el ultimo de la lista y comprobar que es ultimo desaparece

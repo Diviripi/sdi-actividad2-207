@@ -22,18 +22,25 @@ module.exports = function(app, swig, gestorBD) {
 		var emails = req.body.id;
 		if (emails) {
 			var list = [];
-			for (var i = 0; i < emails.length; i++) {
-				list.push({ email: emails[i] });
+			if (Array.isArray(emails)) {
+				for (var i = 0; i < emails.length; i++) {
+					list.push({ email: emails[i] });
+				}
+			} else {
+				list.push({ email: emails });
 			}
+			console.log(list);
 
 			var criterio = { $or: list };
 			gestorBD.usersDB.borrarUsuarios(criterio, function(users) {
 				//console.log(users.result.n);
 
 				res.redirect('/users/list');
+				return;
 			});
+		} else {
+			res.redirect('list');
 		}
-		res.redirect('list');
 	});
 
 	app.get('/database/reset', function(req, res) {
