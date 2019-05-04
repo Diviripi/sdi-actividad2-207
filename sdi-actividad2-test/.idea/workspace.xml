@@ -286,7 +286,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556972668372" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556973451568" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../sdi-actividad2-207/sdi-actividad2-test" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
@@ -650,7 +650,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87684000" />
+    <option name="totallyTimeSpent" value="88152000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -662,7 +662,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.77661794" visible="true" weight="0.18255034" />
       <window_info id="Structure" order="1" sideWeight="0.22338204" side_tool="true" weight="0.2261745" />
@@ -739,6 +738,9 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
     <MESSAGE value="Created sign up" />
     <MESSAGE value="First commit of the branch login" />
     <MESSAGE value="Login done&#10;&#10;Default admin added&#10;Created sample data class" />
