@@ -235,21 +235,11 @@ public class ProjectTests {
         PO_HomeView.checkElement(driver,"free","//h2[contains(text(),'Add')]");
     }
 
-    //Ir al formulario de alta de oferta, rellenarla con datos validos, y comprobar que la oferta se ha añadido al
-    //listado de ofertas del usuario
+    //Mostar el listado de ofertas , y ver que se muestran todas las del usuario
     @Test
     public void PR16(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'products-menu')]/a");
-        elementos.get(0).click();
-        // Esperamos a aparezca la opción de desconectar
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/sales/addProduct')]");
-        elementos.get(0).click();
-
-        PO_AddProduct.rellenarFormulario(driver,"NuevoElemento","Una descripcion","12");
-        PO_AddProduct.checkElement(driver,"text","NuevoElemento");
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_MyOffers.countOffers(driver,3);
     }
 
     //Ir al formulario de alta de oferta, rellenarla con datos invalidos, y comprobar que se muestra el error en la pagina
