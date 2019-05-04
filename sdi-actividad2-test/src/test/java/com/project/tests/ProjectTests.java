@@ -143,13 +143,11 @@ public class ProjectTests {
 
     }
 
-    //inicio de sesion con datos invalidos(usuario estandar,email no existente)
+    //no aparece el boton de logout si no esta autenticado
     @Test
     public void PR09() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "noExiste@email.com", "654321");
-
-        PO_LoginView.checkElement(driver, "text", "Identificate");
+        PO_View.elementoNoPresenteEnLaPagina(driver,"logout");//falla porq encuentra el texto en el scrip
+        //pero en realidad no esta en la pagina
 
     }
 
