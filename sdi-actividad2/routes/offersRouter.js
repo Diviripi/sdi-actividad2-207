@@ -78,6 +78,9 @@ module.exports = function (app, swig, gestorBD) {
         })
     })
 
+    function setMoney(money,res){
+        res.cookie("money",money);
+    }
     app.get('/offers/buyOffer/:id', function (req, res) {
         console.log(req.params.id);
         let criterioOferta = {_id: gestorBD.mongo.ObjectID(req.params.id)};
@@ -85,10 +88,12 @@ module.exports = function (app, swig, gestorBD) {
         gestorBD.usersDB.obtenerUsuarios(criterioUsuario, function (usuarios) {
             if (usuarios == null) {
                 res.send('Error wile buying');
+                return;
             } else {
                 gestorBD.offersDB.getOffer(criterioOferta, function (ofertas) {
                     if (ofertas == null) {
                         res.send('Error while buying');
+                        return;
                     } else {
                         if (usuarios[0].money >= ofertas[0].price) {
                             ofertas[0].bought = true;
@@ -97,20 +102,25 @@ module.exports = function (app, swig, gestorBD) {
                             gestorBD.offersDB.updateOffer(criterioOferta, ofertas[0], function (id) {
                                 if (id == null) {
                                     res.send('Error while buying');
+                                    return;
                                 } else {
                                     console.log('Offer updated correctly');
                                     console.log(ofertas[0]);
+                                   
+                                    gestorBD.usersDB.updateUser(criterioUsuario, usuarios[0], function (id) {
+                                        if (id == null) {
+                                            res.send('Error while buying');
+                                        } else {
+                                            console.log('User updated correctly');
+                                            console.log(usuarios[0]);
+                                            setMoney(usuarios[0].money,res)
+                                            res.redirect('/store');
+                                        }
+                                    });
                                 }
                             });
-                            gestorBD.usersDB.updateUser(criterioUsuario, usuarios[0], function (id) {
-                                if (id == null) {
-                                    res.send('Error while buying');
-                                } else {
-                                    console.log('User updated correctly');
-                                    console.log(usuarios[0]);
-                                }
-                            });
-                            res.redirect('/store');
+                           
+                            
                         } else {
                             res.redirect('/store?mensaje=No tienes dinero suficiente para comprar esta oferta&tipoMensaje=alert-danger');
                         }
