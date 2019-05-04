@@ -359,4 +359,13 @@ public class ProjectTests {
 
     }
 
+    //ver ofertas y comprobar que estan todas
+    @Test
+    public void PR32() {
+        driver.navigate().to(URL_CLIENTE_REST);
+        PO_LoginViewAPI.fillForm(driver, "user0@email.com", "user");
+        PO_OfertasAPI.contarOfertas(driver,12);//3 ofertas por otros 4 usuarios =12
+
+    }
+
 }
