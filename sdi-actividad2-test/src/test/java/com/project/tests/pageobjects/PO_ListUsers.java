@@ -18,4 +18,14 @@ public class PO_ListUsers  extends PO_View{
         List<WebElement> elementos = PO_View.checkElement(driver, "free", "//input[@type='checkbox']");
         assertTrue("El numero de usuarios no coincide",elementos.size()==numeroUsuarios);
     }
+
+    public static void borrarUsuario(WebDriver driver,int... usuarios){
+        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//input[@type='checkbox']");
+        for(int u:usuarios){
+            elementos.get(u).click();
+        }
+        clickDeleteButton(driver);
+
+
+    }
 }

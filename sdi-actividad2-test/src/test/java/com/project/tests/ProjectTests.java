@@ -162,23 +162,34 @@ public class ProjectTests {
         PO_ListUsers.countUsers(driver,5);//5 mas el admin
     }
 
-    //Comprobar boton cerrar sesion si no esta visivle cuando el usauro no esta autenticado
+    //borrar primer usuario
     @Test
     public void PR11() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_NavView.elementoNoPresenteEnLaPagina(driver, "Desconectar");
+        PO_LoginView.fillForm(driver, "admin@admin.com", "admin");
+        PO_HomeView.clickOption(driver, "/users/list", "class", "btn btn-primary");
+        PO_View.checkElement(driver,"text","Users");
+        PO_ListUsers.countUsers(driver,5);//5 mas el admin
+        PO_ListUsers.borrarUsuario(driver,0);
+
+
+        PO_ListUsers.countUsers(driver,4);//5 mas el admin
+        PO_View.elementoNoPresenteEnLaPagina(driver,"user0");
+
     }
 
-    //Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el sistema
-    //por defecto existen 6 usuarios(1 admin,javi,ivan, 3 autogenerados)
+    //borrar ultimo usuario
     @Test
     public void PR12() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-        PO_NavView.clickOption(driver, "/users/list", "class", "btn btn-primary");
-        List<WebElement> elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(6, elementos.size());
+        PO_LoginView.fillForm(driver, "admin@admin.com", "admin");
+        PO_HomeView.clickOption(driver, "/users/list", "class", "btn btn-primary");
+        PO_View.checkElement(driver,"text","Users");
+        PO_ListUsers.countUsers(driver,5);//5 mas el admin
+        PO_ListUsers.borrarUsuario(driver,4);
+
+
+        PO_ListUsers.countUsers(driver,4);//5 mas el admin
+        PO_View.elementoNoPresenteEnLaPagina(driver,"user4");
+
 
     }
 
