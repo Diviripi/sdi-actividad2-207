@@ -3,13 +3,11 @@ package com.project.tests;
 
 import com.project.tests.pageobjects.*;
 import org.junit.*;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class ProjectTests {
     // En Windows (Debe ser la versión 65.0.1 y desactivar las actualizacioens
     // automáticas)):
     static String PathFirefox64 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckdriver022 = "C:\\Users\\diviripi\\Desktop\\SDI\\lab 5\\PL-SDI-Sesión5-material\\geckodriver024win64.exe";
+    static String Geckdriver022 = "geckodriver024win64.exe";
     // En MACOSX (Debe ser la versión 65.0.1 y desactivar las actualizacioens
     // automáticas):
     // static String PathFirefox65 =
@@ -78,25 +76,28 @@ public class ProjectTests {
     //Registro del usuario con datos validos
     @Test
     public void PR01() {
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_HomeView.clickOption(driver, "register", "class", "btn btn-primary");
         PO_RegisterView.fillForm(driver, "usuario@email.com", "usuario", "usuario", "123456", "123456");
-        PO_View.checkElement(driver, "text", "Buscar ofertas");
+        PO_View.checkElement(driver, "text", "My offers");
     }
 
-    //Registro de Usuario con datos invalidos (email vacio,nombre vacio,apellidos vacios)
+    //Registro de Usuario con datos invalidos (email vacio,nombre vacio,apellidos vacios,contraseña mal repetida)
     @Test
     public void PR02() {
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_HomeView.clickOption(driver, "register", "class", "btn btn-primary");
         PO_RegisterView.fillForm(driver, "", "", "", "", "");
-        PO_View.checkElement(driver, "text", "Registrate");
+      //  PO_View.checkElement(driver, "text", "Registrar");
+        PO_RegisterView.fillForm(driver, "email@email.com", "repeticion invalida", "repeticion invalida",
+                "123", "321");
+        PO_View.checkElement(driver, "text", "match");
     }
 
-    //Registro de usuario con repeticion de password erronea
+    //Usuaio ya existente (admin)
     @Test
     public void PR03() {
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-        PO_RegisterView.fillForm(driver, "email", "ejemplo", "ejemplo", "123456", "654321");
-        PO_View.checkElement(driver, "text", "Las contraseñas no coinciden");
+        PO_HomeView.clickOption(driver, "register", "class", "btn btn-primary");
+        PO_RegisterView.fillForm(driver, "admin@admin.com", "Ya existente", "existente", "123", "123");
+        PO_View.checkElement(driver, "text", "Email incorrecto");
     }
 
     //Registro de usuario con email ya existente
