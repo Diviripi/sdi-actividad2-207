@@ -299,4 +299,25 @@ public class ProjectTests {
         PO_View.checkElement(driver,"text","60");
     }
 
+
+    //comprar oferta con saldo a 0
+    @Test
+    public void PR23(){
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "oferta1,4");
+        PO_BuyList.comprarOferta(driver ,0);
+        PO_View.checkElement(driver,"text","0 $");
+    }
+
+    //comprar oferta con saldo a negativo
+    @Test
+    public void PR24(){
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "oferta2,4");
+        PO_BuyList.comprarOferta(driver ,0);
+        PO_View.checkElement(driver,"text","No tienes");
+    }
+
   }

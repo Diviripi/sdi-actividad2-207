@@ -89,11 +89,14 @@ module.exports = function(app, swig, gestorBD) {
 				if (i == 4) {
 					boughtF = false;
 				}
-
+				var priceF = 40 + 40 * j;
+				if (j == 1) {
+					priceF = 100;
+				}
 				var newOffer = {
 					title: 'Oferta' + j + ',' + i + '',
 					description: 'Descripcion oferta[' + j + '] usuario[' + i + ']',
-					price: 40 + 40 * j,
+					price: priceF,
 					date: new Date().toLocaleDateString(),
 					highlighted: j == 0,
 					user: userF,
