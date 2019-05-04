@@ -4,14 +4,8 @@ package com.project.tests;
 import com.project.tests.pageobjects.*;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 //Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
@@ -295,22 +289,14 @@ public class ProjectTests {
         PO_BuyList.contarOfertas(driver ,1);
     }
 
-    //Buscar ofertas con el cuadro de busqueda algo que no exista y comprobar que no se mustra nada
+    //comprar oferta con saldo positivo
     @Test
     public void PR22(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'/buy/list')]");
-        elementos.get(0).click();
-
-        PO_BuyList.rellenarCuadroDeBusqueda(driver,"AlgoQueNoExiste");
-
-
-        List<WebElement> list = driver.findElements(By.tagName("td"));
-
-
-        assertEquals(0,list.size());
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_HomeView.clickOption(driver, "store", "class", "search-query form-control");
+        PO_BuyList.rellenarCuadroDeBusqueda(driver, "oferta0,4");
+        PO_BuyList.comprarOferta(driver ,0);
+        PO_View.checkElement(driver,"text","60");
     }
 
   }

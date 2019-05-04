@@ -85,6 +85,11 @@ module.exports = function(app, swig, gestorBD) {
 				//ofertas
 				var buyerF = i == 4 ? users[0].email : users[i + 1].email;
 				var userF = users[i].email;
+				var boughtF = j < 2;
+				if (i == 4) {
+					boughtF = false;
+				}
+
 				var newOffer = {
 					title: 'Oferta' + j + ',' + i + '',
 					description: 'Descripcion oferta[' + j + '] usuario[' + i + ']',
@@ -92,8 +97,8 @@ module.exports = function(app, swig, gestorBD) {
 					date: new Date().toLocaleDateString(),
 					highlighted: j == 0,
 					user: userF,
-					bought: j < 2,
-					buyer: buyerF,
+					bought: boughtF,
+					buyer: boughtF ? buyerF : '',
 					chats: {
 						buyerF: [
 							{

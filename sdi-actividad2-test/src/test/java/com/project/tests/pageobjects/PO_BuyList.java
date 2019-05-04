@@ -25,4 +25,8 @@ public class PO_BuyList  extends PO_View{
     }
 
 
+    public static void comprarOferta(WebDriver driver, int ofertaAComprar) {
+        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[@class='btn btn-info']");
+        elementos.get(ofertaAComprar).click();
+    }
 }
