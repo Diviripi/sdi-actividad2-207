@@ -242,37 +242,27 @@ public class ProjectTests {
         PO_MyOffers.countOffers(driver,3);
     }
 
-    //Ir al formulario de alta de oferta, rellenarla con datos invalidos, y comprobar que se muestra el error en la pagina
+    //borrar la primera oferta
     @Test
     public void PR17(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_MyOffers.countOffers(driver,3);
+        PO_MyOffers.borrarOferta(driver,0);
+        PO_MyOffers.countOffers(driver,2);
+        PO_View.elementoNoPresenteEnLaPagina(driver,"40");//la primera oferta vale 40, forma de comprobar que esta
+        //borrada
 
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'products-menu')]/a");
-        elementos.get(0).click();
-        // Esperamos a aparezca la opción de desconectar
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/sales/addProduct')]");
-        elementos.get(0).click();
-
-        PO_AddProduct.rellenarFormulario(driver,"","","");
-        PO_AddProduct.checkElement(driver,"text","Crear oferta");
     }
 
-    //Mostrar las ofertas de un usuario y comprobar que se muestran todas sus ofertas
+    //borrar la ultima oferta
     @Test
     public void PR18(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillForm(driver, "javi@email.com", "123456");
-
-        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'products-menu')]/a");
-        elementos.get(0).click();
-        // Esperamos a aparezca la opción de desconectar
-        elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, '/sales/list')]");
-        elementos.get(0).click();
-
-        elementos = PO_View
-                .checkElement(driver, "free", "//tbody/tr");
-        assertEquals(3,elementos.size());
+        PO_LoginView.fillForm(driver, "user0@email.com", "user");
+        PO_MyOffers.countOffers(driver,3);
+        PO_MyOffers.borrarOferta(driver,2);
+        PO_MyOffers.countOffers(driver,2);
+        PO_View.elementoNoPresenteEnLaPagina(driver,"120");//la tercera oferta vale 120, forma de comprobar que esta
+        //borrada
 
     }
 
