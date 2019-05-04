@@ -160,6 +160,7 @@ module.exports = function(app, gestorBD) {
 			} else {
 				var idOferta = req.body.offer;
 				var usuario = infoToken.usuario;
+				var CONVER_ID=usuario.split("@")[0];
 				//	var usuario = req.body.usuario;
 				var date = new Date().toISOString();
 				var msg = req.body.msg;
@@ -179,6 +180,7 @@ module.exports = function(app, gestorBD) {
 						var chats = offer.chats;
 						//console.log(idConver)
 						if (idConver != undefined) {
+							idConver=idConver.split("@")[0];
 							//no es una nueva conversacion
 							//	console
 							chats[idConver].push({
@@ -192,8 +194,8 @@ module.exports = function(app, gestorBD) {
 							if (chats == undefined) {
 								chats = {};
 							}
-							chats[usuario] = [];
-							chats[usuario].push({
+							chats[CONVER_ID] = [];
+							chats[CONVER_ID].push({
 								autor: usuario,
 								msg: msg,
 								date: date,
@@ -226,6 +228,7 @@ module.exports = function(app, gestorBD) {
 			} else {
 				var idOferta = req.query.offer;
 				var usuario = infoToken.usuario;
+				var CONVER_ID=usuario.split("@")[0];
 				gestorBD.offersDB.findOffer(idOferta, function(oferta) {
 					if (oferta == null || oferta.length == 0) {
 						res.status(404); // not found
@@ -251,7 +254,7 @@ module.exports = function(app, gestorBD) {
 							return;
 						} else {
 							//el usuario no es el propietario, puede tener una conversacion o no
-							if (oferta.chats[usuario] == undefined) {
+							if (oferta.chats[CONVER_ID] == undefined) {
 								//no existe la conversacion con el usuario{
 								res.status(404);
 								res.json({
@@ -260,7 +263,7 @@ module.exports = function(app, gestorBD) {
 								return;
 							} else {
 								var tmp = {};
-								tmp[usuario] = oferta.chats[usuario];
+								tmp[CONVER_ID] = oferta.chats[CONVER_ID];
 
 								res.status(200);
 								res.json({
