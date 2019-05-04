@@ -84,9 +84,12 @@ public class ProjectTests {
     //Registro de Usuario con datos invalidos (email vacio,nombre vacio,apellidos vacios)
     @Test
     public void PR02() {
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_HomeView.clickOption(driver, "register", "class", "btn btn-primary");
         PO_RegisterView.fillForm(driver, "", "", "", "", "");
-        PO_View.checkElement(driver, "text", "Registrate");
+      //  PO_View.checkElement(driver, "text", "Registrar");
+        PO_RegisterView.fillForm(driver, "email@email.com", "repeticion invalida", "repeticion invalida",
+                "123", "321");
+        PO_View.checkElement(driver, "text", "match");
     }
 
     //Registro de usuario con repeticion de password erronea
