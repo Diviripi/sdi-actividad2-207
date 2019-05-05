@@ -1,5 +1,6 @@
 module.exports = function(app, swig, gestorBD) {
 	app.get('/users/list', function(req, res) {
+		app.get("logger").debug("Ver usuarios")
 		gestorBD.usersDB.obtenerUsuarios({}, function(usuarios) {
 			users = [];
 			for (var i = 0; i < usuarios.length; i++) {
@@ -10,7 +11,7 @@ module.exports = function(app, swig, gestorBD) {
 					rol: usuarios[i].rol
 				};
 
-				//TODO: no se debe poder borrar el usuario logeado
+			
 				users.push(user);
 			}
 			var respuesta = swig.renderFile('views/listUsersView.html', users);
@@ -19,6 +20,7 @@ module.exports = function(app, swig, gestorBD) {
 	});
 
 	app.post('/users/deleteMultiple', function(req, res) {
+		app.get("logger").debug("Borrado de usuarios")
 		var emails = req.body.id;
 		if (emails) {
 			var list = [];
@@ -29,7 +31,7 @@ module.exports = function(app, swig, gestorBD) {
 			} else {
 				list.push({ email: emails });
 			}
-			console.log(list);
+			//console.log(list);
 
 			var criterio = { $or: list };
 			gestorBD.usersDB.borrarUsuarios(criterio, function(users) {
@@ -44,6 +46,7 @@ module.exports = function(app, swig, gestorBD) {
 	});
 
 	app.get('/database/reset', function(req, res) {
+		app.get("logger").debug("Reseteo de la base de datos")
 		//crear los usuarios
 		var users = [];
 		var password = 'user';

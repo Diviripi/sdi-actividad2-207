@@ -7,6 +7,10 @@ var http= require('http');
 var fs = require('fs');
 var rest = require('request');
 app.set('rest',rest);
+var log4js =require('log4js');
+var logger= log4js.getLogger();
+logger.level="debug"
+app.set("logger",logger);
 
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");

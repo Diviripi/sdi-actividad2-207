@@ -1,19 +1,22 @@
 module.exports = function (app, swig, gestorBD) {
 
     app.get("/logout", function (req, res) {
+        app.get("logger").debug("Logout")
         logUser(null, null, req,res);
         setMoney(null,res);
         setRole(null,res);
-        res.redirect("/login");//TODO : solo se deberia mostrar el boton cuando el usuario esta logeado, arreglar eso
+        res.redirect("/login");
 
     })
     app.get('/register', function (req, res) {
+        app.get("logger").debug("Registro")
         var respuesta = swig.renderFile('views/registerView.html', {});
         res.send(respuesta);
     });
 
 
     app.post('/registerUser', function (req, res) {
+        app.get("logger").debug("Registrando usuario")
         var password = req.body.password;
         var confirmPassword = req.body.passwordConfirm;
 
@@ -74,11 +77,13 @@ module.exports = function (app, swig, gestorBD) {
     }
 
     app.get("/login", function (req, res) {
+        app.get("logger").debug("Login")
         var respuesta = swig.renderFile('views/loginView.html', {});
         res.send(respuesta);
     })
 
     app.post("/login", function (req, res) {
+        app.get("logger").debug("Logeando usuario")
         var seguro = app.get("crypto").createHmac('sha256', app.get('clave'))
             .update(req.body.password).digest('hex');
         var criterio = {
